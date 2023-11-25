@@ -2,7 +2,7 @@ version: "3"
 
 services:
   api:
-    container_name: api
+    container_name: serveur-web
     image: api/php5.6-apache:latest
     build:
       context: ./docker/php
@@ -11,41 +11,41 @@ services:
     ports:
       - 8080:80
     networks:
-      api-network:
-        ipv4_address: 172.59.0.2
+      serveur-web:
+        ipv4_address: 192.168.102.50
     depends_on:
-      - api-database
+      - serveur-BD
     links:
-      - api-database
+      - serveur-BD
     volumes:
       - ./public:/var/www/html
 
-  api-database:
+  serveur-BD:
     image: api/database:latest
     build:
       context: ./docker/mysql
       dockerfile: ./Dockerfile
     command: "--innodb-use-native-aio=0"
-    container_name: api-database
+    container_name: serveur-BD
     restart: always
     tty: true
     volumes:
-      - api-database:/var/lib/mysql
+      - serveur-BD:/var/lib/mysql
     ports:
       - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=root
     networks:
-      api-network:
-        ipv4_address: 172.59.0.3
+      serveur-web:
+        ipv4_address: 192.168.102.51
 
 volumes:
-  api-database:
+  serveur-BD:
     driver: local
 
 networks:
-  api-network:
+  serveur-web:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.59.0.0/28
+        - subnet: 192.168.102.0/24

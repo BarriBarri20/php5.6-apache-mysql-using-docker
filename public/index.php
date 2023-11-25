@@ -9,8 +9,8 @@
 
 <body>
     <div>
-        <p>It works</p>
-        <a href="info.php">See info</a>
+        <p>Clicker ici pour consulter l'information sur le base de donnée MySQL</p>
+        <a href="info.php">Clicker ICI SVP!</a>
     </div>
 </body>
 
